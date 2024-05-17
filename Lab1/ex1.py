@@ -8,7 +8,7 @@ import sys
 import argparse
 
 
-def doStuff(filein, fileout):
+def doStuff(filein, fileout,mode,key):
     # open file handles to both files
     fin = open(filein, mode="r", encoding="utf-8", newline="\n")  # read mode
     fin_b = open(filein, mode="rb")  # binary read mode
@@ -27,8 +27,22 @@ def doStuff(filein, fileout):
     with open(filein, mode="r", encoding="utf-8", newline="\n") as fin:
         text = fin.read()
         # do stuff
-
+        output = ""
+        for i in range(len(text)):
+            if mode.lower() == "e":
+                new_char = ord(text[i]) + key
+                output += new_char
+            elif mode.lower() == "d":
+                new_char = ord(text[i]) - key
+                output += new_char
+            else:
+                print("Error: Invalid input for mode, input either d/e")
+                return
         # file will be closed automatically when interpreter reaches end of the block
+    with open(fileout,"w",encoding="utf-8",newline="\n") as fout:
+        fout.write(output)
+        fout.close()
+        
 
 
 # our main function
@@ -37,12 +51,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-i", dest="filein", help="input file")
     parser.add_argument("-o", dest="fileout", help="output file")
+    parser.add_argument("-m", dest="mode", help="mode d/e")
+    parser.add_argument("-k", dest="key",help = "key")
 
     # parse our arguments
     args = parser.parse_args()
     filein = args.filein
     fileout = args.fileout
+    mode = args.mode
+    key = args.key
 
-    doStuff(filein, fileout)
+    doStuff(filein, fileout,mode)
 
     # all done
