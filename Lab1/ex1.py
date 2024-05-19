@@ -30,11 +30,11 @@ def doStuff(filein, fileout,mode,key):
         output = ""
         for i in range(len(text)):
             if mode.lower() == "e":
-                new_char = ord(text[i]) + key
-                output += new_char
+                new_char = int(ord(text[i])) + int(key)
+                output += chr(new_char)
             elif mode.lower() == "d":
-                new_char = ord(text[i]) - key
-                output += new_char
+                new_char = int(ord(text[i])) - int(key)
+                output += chr(new_char)
             else:
                 print("Error: Invalid input for mode, input either d/e")
                 return
@@ -61,6 +61,6 @@ if __name__ == "__main__":
     mode = args.mode
     key = args.key
 
-    doStuff(filein, fileout,mode)
+    doStuff(filein, fileout,mode,key)
 
     # all done
