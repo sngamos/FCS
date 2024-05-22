@@ -1,23 +1,21 @@
 import sys
 import argparse
 
-def function(filein,fileout,mode,key):
-    with open(filein, mode="rb", encoding="utf-8", newline="\n") as fin:
+def b_func(filein,fileout,mode,key):
+    with open(filein, mode="rb") as fin:
         text = fin.read()
-        # do stuff
-        output = ""
+        output = b""
         for i in range(len(text)):
             if mode.lower() == "e":
-                new_char = int(ord(text[i])) + int(key)
-                output += chr(new_char)
+                new_char = int(text[i]) + int(key)
+                output += bytes([new_char])
             elif mode.lower() == "d":
-                new_char = int(ord(text[i])) - int(key)
-                output += chr(new_char)
+                new_char = int(text[i]) - int(key)
+                output += bytes([new_char])
             else:
                 print("Error: Invalid input for mode, input either d/e")
                 return
-        # file will be closed automatically when interpreter reaches end of the block
-    with open(fileout,"wb",encoding="utf-8",newline="\n") as fout:
+    with open(fileout,"wb") as fout:
         fout.write(output)
         fout.close()
 
@@ -29,13 +27,11 @@ if __name__ == "__main__":
     parser.add_argument("-m", dest="mode", help="mode d/e")
     parser.add_argument("-k", dest="key",help = "key")
 
-    # parse our arguments
     args = parser.parse_args()
     filein = args.filein
     fileout = args.fileout
     mode = args.mode
     key = args.key
 
-    function(filein, fileout,mode,key)
+    b_func(filein, fileout,mode,key)
 
-    # all done
