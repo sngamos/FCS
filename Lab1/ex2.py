@@ -41,4 +41,4 @@ if __name__ == "__main__":
 
     b_func(filein, fileout,mode,key)
 
-
+#when key = 246 the flag is decrypted to a PNG image of a flag of Switzerland
