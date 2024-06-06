@@ -41,6 +41,10 @@ def hax():
     # "Student ID 100XXXX gets 4 points"
     # Remember your goal is to modify the encrypted message
     # therefore, you do NOT decrypt the message here
+    original_plaintext = b"Student ID 1000000 gets 0 points\n"
+    target_plaintext = b"Student ID 100XXXX gets 4 points\n"
+    change = XOR(original_plaintext,target_plaintext)
+    new_cipher = XOR(original_cipher,change)
     return new_cipher
 
 
