@@ -40,31 +40,8 @@ def create_replacement_letters(frequency_dict,reference_dict):
 #print(replacement_dict)
 
 
-replacement_dict = {'U': 'E',
-                     'J': 'T',
-                       'Y': 'I',
-                         'Q': 'A',
-                           'E': 'O',
-                             'D': 'N',
-                               'I': 'S',
-                                 'X': 'H',
-                                   'H': 'R',
-                                     'B': 'L',
-                                       'T': 'D',
-                                         'W': 'G',
-                                           'C': 'M',
-                                             'S': 'C',
-                                               'O': 'Y',
-                                                 'K': 'U',
-                                                   'M': 'W',
-                                                     'V': 'F',
-                                                       'F': 'P',
-                                                         'R': 'B',
-                                                           'L': 'V',
-                                                             'A': 'K',
-                                                               'N': 'X',
-                                                                 'Z': 'Z',
-                                                                   'P': 'J'}
+replacement_dict = {'U': 'E', 'J': 'A', 'Y': 'R', 'Q': 'I', 'E': 'O', 'D': 'T', 'I': 'N', 'X': 'S', 'H': 'L', 'B': 'C', 'T': 'U', 'W': 'D', 'C': 'P', 'S': 'M', 'O': 'H', 'K': 'G', 'M': 'B', 'V': 'F', 'F': 'Y', 
+'R': 'W', 'L': 'K', 'A': 'V', 'N': 'X', 'Z': 'Z', 'P': 'J'}
 
 def replace_letters(plain_text,replacement_dict):
     new_text=''
@@ -127,6 +104,7 @@ def doStuff(filein,fileout=None):
         with open(fileout,'w',encoding='utf-8')as fout:
             fout.write(new_text)
             fout.close()
+
 
 
     
