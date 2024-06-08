@@ -1,0 +1,4 @@
+python ex1.py -i sherlock_short.txt -o sherlock_short_out.txt -k 1 -m e
+python ex1.py -i sherlock_short_out.txt -o sherlock_short_out2.txt -k 1 -m d
+
+python ex2.py -i flag -o flag_out -k 0 -m flag
