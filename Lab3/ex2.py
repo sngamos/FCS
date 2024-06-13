@@ -40,17 +40,6 @@ def brute_force(charset,length,hashes_list):
     print("The computation time is: ",computation_time)
     #print(hash_dict)
     return hash_dict
-"""
-if __name__ == "__main__":
-    CHARSET = "abcdefghijklmnopqrstuvwxyz1234567890"
-    LENGTH = 5
-    brute_force(CHARSET,LENGTH,file_content_list)
-                  
-
-The computation time is:  1014.2041130065918
-
-decryted_dict = {'ddaafa5d551a582bc924d09cc8d33ee5': 'aseas', '96f6065d8f2dd1376eff88fba65d1d83': 'cance', '836626589007d7dd5304c8d22815fffc': 'di5gv', 'a74edf83748e3c4fa5f31ec10bad79db': 'dsmto', '1b31905c59f481958d2eb72158c27ac7': 'egunb', 'a8218c67a5b4e652e30a59372e07df59': 'hed4e', '81466b6bb4be5a48e2230be1338bcde6': 'lou0g', '6e313b70d12de950443527a33d802b76': 'mlhdi', '78c1b8edd1bc3ffc438432479289a9e1': 'nized', 'de952f5454fb0ee79bca249f80e9fe8f': 'ofror', 'a92b66a9802704ca8616c4b092378272': 'opmen', '644674d142ba2174a80889f833b32563': 'owso9', '1b4baba3ae3be69857b323cf6b7fcd80': 'sso55', '0d5b558d5f6744deaaf5b016c6c77a57': 'tpoin', 'd4efdba5e9725e77c9b9051fa8136f0a': 'tthel'}
-"""
 
 def write_dict_to_file(decryted_dict,hash_list_in,fileout):
     sorted_list =[None]*len(hash_list_in)
@@ -61,7 +50,6 @@ def write_dict_to_file(decryted_dict,hash_list_in,fileout):
             content.write(item+'\n')
         content.close()
     return sorted_list
-
 
 
 if __name__ == "__main__":
@@ -82,3 +70,5 @@ if __name__ == "__main__":
     decryted_dict =brute_force(CHARSET,LENGTH,file_content_list)
     sorted_list = write_dict_to_file(decryted_dict,file_content_list_copy,file_out)
     print("Brute force attack completed!\nOutput written to: ",file_out)
+
+"The computation time is:  59.40768504142761"
