@@ -15,12 +15,12 @@ def dhke_setup(nb):
 
 
 def gen_priv_key(p):
-    a = random.randint(1, p-2)
+    a = int(random.randint(1, p-2))
     return a
 
 
 def get_pub_key(alpha, a, p):
-    A = square_multiply(alpha, a, p)
+    A = int(square_multiply(alpha, a, p))
     return A
 
 
@@ -28,8 +28,6 @@ def get_shared_key(keypub, keypriv, p):
     sharedkey = square_multiply(keypub, keypriv, p)
     return sharedkey
 
-
-message = "Hello, World!"
 
 
 
@@ -54,9 +52,13 @@ if __name__ == "__main__":
     print("My shared key is: ", sharedKeyA)
     print("Test other shared key is: ", sharedKeyB)
     print("Length of key is %d bits." % sharedKeyA.bit_length())
-    message = 123
+    message = 0xF
     print("My plaintext: " , message)
-    cipher = present(bin(message)[2:], bin(sharedKeyA)[2:])
+    cipher = present(message, sharedKeyA)
     print("My Cipher text: ", cipher)
-    decrypt = present_inv(bin(cipher)[2:], bin(sharedKeyB)[2:])
+    decrypt = present_inv(cipher, sharedKeyB)
     print("Your decrypted message: ", decrypt)
+
+
+
+

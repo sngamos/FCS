@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import pdb
+
 # Present skeleton file for 50.042 FCS
 
 
@@ -32,49 +34,50 @@ def ror(val, r_bits, max_bits): return \
 
 
 def genRoundKeys(initial_key):
-    roundKeys_list = []
+    round_keys = []
+    round_keys.append(32)
+    round_keys.append((initial_key >> 16) & 0xFFFFFFFFFFFFFFFF)
     key = initial_key
-    roundKeys_list.append(32)
-    roundKeys_list.append((initial_key >> 16) & 0xFFFFFFFFFFFFFFFF)
-    for i in range(1,FULLROUND+2):
-        key = rol(key, 61,80) # Rotate left 80-bit key by 61 bits
-        #pass the 4 bits [79-76] through the sbox 
-        four_bit= (key >> 76) & 0xF
-        sbox_out = sbox[four_bit]
-        key = (sbox_out<<76) | (key & 0x0FFFFFFFFFFFFFFFFFFF)
-        # XOR the bits [19-15] with LSB of round counter <i>
-        key ^= (i & 0x1F) << 15
-        #Append the round key (64 MSB) to the roundKeys_list
-        round_key = (key >> 16) & 0xFFFFFFFFFFFFFFFF
-        roundKeys_list.append(round_key)
-    return roundKeys_list
     
+    for i in range(1,32):
+        key = rol(key, 61, 80)
+        
+        # Pass the 4 bits [79...76] through S-box
+        high_nibble = (key >> 76) & 0xF
+        sbox_output = sbox[high_nibble]
+        key = (sbox_output << 76) | (key & 0x0FFFFFFFFFFFFFFFFFFF) 
+        # XOR the bits [19...15] with LSB of round_counter (i)
+        key ^= (i & 0x1F) << 15
+
+        # Append the round key (the most significant 64 bits)
+        round_key = (key >> 16) & 0xFFFFFFFFFFFFFFFF
+        round_keys.append(round_key)
+        
+    return round_keys
 
 def addRoundKey(state, Ki):
     return state ^ Ki
 
 
 def sBoxLayer(state):
-    #if convert to binary
-    if type(state) == str:
+    # Convert the input hex number to binary
+    if (type(state) == str):
         binary_input = bin(int(state, 16))[2:].zfill(64)
     else:
         binary_input = bin(state)[2:].zfill(64)
-    #process the nibbles
-    sbox_out = ""
-    for i in range(0, len(binary_input),4):
+    
+    # Process each nibble (4-bit segment)
+    transformed_binary = ''
+    for i in range(0, len(binary_input), 4):
         nibble = binary_input[i:i+4]
-        #convert nibble to int
-        nibble = int(nibble,2)
-        #get the sbox value
-        sbox_temp = sbox[nibble]
-        #convert back to binary
-        sbox_out += bin(sbox_temp)[2:].zfill(4)
-    #convert back to hex
-    sbox_out = hex(int(sbox_out,2))[2:].upper().zfill(16)
-    #print(sbox_out)
-    return sbox_out
-
+        # Convert nibble to integer, apply S-box, and convert back to binary
+        transformed_nibble = bin(sbox[int(nibble, 2)])[2:].zfill(4)
+        transformed_binary += transformed_nibble
+    
+    # Convert the transformed binary string back to a hexadecimal number
+    transformed_hex = hex(int(transformed_binary, 2))[2:].upper().zfill(16)
+    
+    return transformed_hex
 
 def sBoxLayer_inv(state):
     # Convert the input hex number to binary
@@ -93,7 +96,7 @@ def sBoxLayer_inv(state):
     
     # Convert the transformed binary string back to a hexadecimal number
     transformed_hex = hex(int(transformed_binary, 2))[2:].upper().zfill(16)
-    #print(transformed_hex)
+    
     return transformed_hex
 
 
@@ -121,11 +124,12 @@ def pLayer_inv(state):
     unshuffled_hex = hex(int(unshuffled_bin_str, 2))[2:].upper().zfill(16)
     return unshuffled_hex
 
+
 def present_round(state, roundKey):
     new_state = addRoundKey(state, roundKey)
     new_state = sBoxLayer(new_state)
     new_state = pLayer(new_state)
-    return int(new_state,16)
+    return int(new_state, 16)
 
 
 def present_inv_round(state, roundKey):
@@ -163,6 +167,7 @@ if __name__ == "__main__":
     # Testvectors for single rounds without keyscheduling
     plain1 = 0x0000000000000000
     key1 = 0x00000000000000000000
+
     round1 = present_round(plain1, key1)
     round11 = 0xffffffff00000000
     assert round1 == round11
@@ -203,9 +208,9 @@ if __name__ == "__main__":
     assert plain3 == plain33
 
     plain4 = 0xFFFFFFFFFFFFFFFF
+    print(plain4)
     key4 = 0xFFFFFFFFFFFFFFFFFFFF
+    print(key4)
     cipher4 = present(plain4, key4)
     plain44 = present_inv(cipher4, key4)
     assert plain4 == plain44
-
-
