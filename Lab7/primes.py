@@ -52,8 +52,6 @@ def gen_prime_nbits(n):
     return x
 
 
-    pass
-
 if __name__=="__main__":
     print(square_multiply(5,21293848812,39393))
     print(pow(5,21293848812,39393))

@@ -1,0 +1,1 @@
+One limitation of the RSA protocol attack is that it relies on the predictable structure of the data being encrypted. By using padding schemes like OAEP and PSS, the data becomes randomized and unpredictable, making such attacks ineffective.
